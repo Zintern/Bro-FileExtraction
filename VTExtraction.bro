@@ -35,7 +35,7 @@ event file_hash(f: fa_file, kind:string, hash: string)
                                                 ## Splitting the string for the postive hits
                                                 local positive = split_string(stuff[9],/\:/);
                                                 ## Converting the string from pos into integer
-                                                local trigger = to_int(pos[1]);
+                                                local trigger = to_int(positive[1]);
                                                 ## Trigger if the value exceeds the VTthreshold
                                                 if(trigger >= VTthreshold)
                                                 {
