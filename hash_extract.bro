@@ -3,11 +3,14 @@
 @load base/files/extract
 @load policy/frameworks/intel/seen
 @load policy/frameworks/intel/do_notice
- 
+
+##Redefine to path desired.
 global path = "/home/zintern/EXTRACTED/temp/";
- 
+
+##Redefine to desired IoC .dat file
 redef Intel::read_files += {fmt("%s/otx.dat", @DIR)};
- 
+
+## When a new file is seen:
 event file_new(f: fa_file)
 {
         Files::add_analyzer(f, Files::ANALYZER_MD5);
@@ -21,7 +24,8 @@ event file_new(f: fa_file)
  
  
 }
- 
+
+## When a file_hash has been seen
 event file_hash(f: fa_file, kind: string, hash: string)
         {
         local seen = Intel::Seen($indicator=hash,
@@ -37,7 +41,7 @@ event file_hash(f: fa_file, kind: string, hash: string)
         Intel::seen(seen);
         }
  
- 
+## When a match has been found between the seen traffic and the otx.dat file indicators.
 event Intel::match(s: Intel::Seen, items:set[Intel::Item])
 {
                 print("event triggered");
