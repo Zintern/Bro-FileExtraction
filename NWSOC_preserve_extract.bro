@@ -32,11 +32,12 @@ event file_sniff(f: fa_file, meta: fa_metadata)
         if(MIME in mime_to_ext){ext = mime_to_ext[MIME];}
         # If MIME is not in the pre-defined map:
         else {ext = split_string(meta$mime_type, /\//)[1];}
- 
+        
+        if(f$source == "HTTP"){
         #Extract the file:
         local fname = fmt("%s-%s.%s", f$source, f$id, ext);
         Files::add_analyzer(f, Files::ANALYZER_EXTRACT, [$extract_filename=fname]);
- 
+        }
 }
  
 ## A file has been hashed - event -
